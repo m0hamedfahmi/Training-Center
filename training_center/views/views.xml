@@ -1,60 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="training_center.list">
-      <field name="name">training_center list</field>
-      <field name="model">training_center.training_center</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
--->
+    <data noupdate="0">
+       
+      <record id="view_student_form" model="ir.ui.view">
+          <field name="name">view.student.student.form</field>
+          <field name="model">student.student</field>
+          <field name="arch" type="xml">
+              <form string="Student Form">
+                  <sheet>
+                      <group>
+                          <field name="name"/>
+                          <field name="birth_date"/>
+                      </group>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+      
+      <record id="view_student_tree" model="ir.ui.view">
+          <field name="name">view.student.student.tree</field>
+          <field name="model">student.student</field>
+          <field name="arch" type="xml">
+              <tree string="Student List">
+                  <field name="name"/>
+                  <field name="birth_date"/>
+              </tree>
+          </field>
+      </record>
+      
+      <record id="action_student_view" model="ir.actions.act_window">
+          <field name="name">Students</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">student.student</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              Students
+            </p><p>
+              Create new Student
+            </p>
+          </field>
+      </record>
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="training_center.action_window">
-      <field name="name">training_center window</field>
-      <field name="res_model">training_center.training_center</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
+      <menuitem id="menu_student_root" name="Student Root" sequence="10"/>
+      <menuitem id="menu_student_categ" name="Student Category" parent="menu_student_root" sequence="1"/>
+      <menuitem id="menu_student_view" name="Student" parent="menu_student_categ" action="action_student_view" sequence="1"/>
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="training_center.action_server">
-      <field name="name">training_center server</field>
-      <field name="model_id" ref="model_training_center_training_center"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="training_center" id="training_center.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="training_center.menu_1" parent="training_center.menu_root"/>
-    <menuitem name="Menu 2" id="training_center.menu_2" parent="training_center.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="training_center.menu_1_list" parent="training_center.menu_1"
-              action="training_center.action_window"/>
-    <menuitem name="Server to list" id="training_center" parent="training_center.menu_2"
-              action="training_center.action_server"/>
--->
-  </data>
+    </data>
 </odoo>
