@@ -12,11 +12,32 @@ class Students(models.Model):
 
     name = fields.Char(string="Student Name", required=True, )
     birth_date = fields.Date(string="Birth Date", required=True, default=fields.Date.context_today)
+    age = fields.Integer(string="Age", compute="_compute_age", )
     email = fields.Char(string="Email", required=True, )
     national_id = fields.Char(string="National ID", required=True, ) #TODO: Add constarints to check if it is 14 digits
     school_id = fields.Many2one(comodel_name="res.partner", string="School", required=False, )
+    school_email = fields.Char(string="School Email", required=False, help="email should be gmail or ...",)
+    related_school_email = fields.Char(string="School Email (Related)", related="school_id.email", required=False, help="email should be gmail or ...",)
+    # related_email = fields.Char(related="school_id.email")
     image_1920 = fields.Image(string="Image", )
     description = fields.Html(string="Description", )
+
+    @api.depends('birth_date')
+    def _compute_age(self):
+        age = fields.Date.context_today(self) - self.birth_date
+        self.age = age.days / 365
+
+    @api.onchange('school_id')
+    def onchange_school_id(self):
+        self.school_email = self.school_id.email
+        if self.school_id.email:
+
+            if '@' in self.school_email:
+                email = self.school_email.split('@')[1]
+                if email not in ['gmail.com', 'yahoo.com', 'hotmail.com']:
+                    return {
+                        'warning': {'title': "Warning: Wrong Email", 'message': "What is this?"},
+                    }
 
     _sql_constraints = [
         ('check_length_national_id', 'check(char_length(national_id)=14)', 'Check The national ID it seems to be incorrect!'),

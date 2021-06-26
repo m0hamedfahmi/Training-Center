@@ -12,22 +12,28 @@
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
                             <h1>
-                                <field name="name" placeholder="Write Student Name"/>
+                                <field name="name" placeholder="Write Student Name" required="0"/>
                             </h1>
                         </div>
                         <group>
                             <group>
                                 <label for="birth_date" string="Birth Date" class="oe_inline"/>
                                 <field name="birth_date" nolabel="1" class="oe_inline"/>
+                                <label for="age"/>
+                                <div>
+                                    <field name="age" class="oe_inline"/> Years
+                                </div>
                                 <field name="email" widget="email"/>
                             </group>
                             <group>
                                 <field name="national_id"/>
                                 <field name="school_id" domain="[('is_school', '=', True)]" context="{'default_is_school': 1}"/>
+                                <field name="school_email" attrs="{'required': [('school_id', '!=', False), ('school_email', '=', False)]}"/>
+                                <field name="related_school_email" help="Related Email"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Description">
+                            <page string="Description" attrs="{'invisible':[('school_id','=', False)]}">
                                 <field name="description"/>
                             </page>
                         </notebook>
