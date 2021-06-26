@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_training_center_training_center,training_center.training_center,model_training_center_training_center,base.group_user,1,1,1,1
+access_training_center_student_student_full_access,training_center.training_center_full_access,model_student_student,base.group_user,1,1,1,1
