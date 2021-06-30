@@ -26,8 +26,9 @@ class Students(models.Model):
 
     @api.depends('birth_date')
     def _compute_age(self):
-        age = fields.Date.context_today(self) - self.birth_date
-        self.age = age.days / 365
+        for rec in self:
+            age = fields.Date.context_today(rec) - rec.birth_date
+            rec.age = age.days / 365
 
     @api.onchange('school_id')
     def onchange_school_id(self):
