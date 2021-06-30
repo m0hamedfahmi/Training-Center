@@ -78,4 +78,15 @@ class Partners(models.Model):
     _inherit = 'res.partner'
 
     is_school = fields.Boolean(string="Is School", )
+    student_ids = fields.One2many(comodel_name="student.student", inverse_name="school_id", string="Students", required=False, )
+
+
+class StudentTags(models.Model):
+    _name = 'student.tag'
+    _rec_name = 'name'
+    _description = 'Student Tags'
+    _order = 'name desc'
+
+    name = fields.Char(string="Name", required=True, )
+
 
