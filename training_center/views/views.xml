@@ -55,6 +55,8 @@
             <field name="arch" type="xml">
                 <tree string="Student List">
                     <field name="name"/>
+                    <field name="email"/>
+                    <field name="age"/>
                     <field name="birth_date"/>
                 </tree>
             </field>
@@ -95,7 +97,69 @@
                     <attribute name="required">1</attribute>
                 </xpath>
 
+                <!-- position values: after|before|replace|attributes|inside -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Students" attrs="{'invisible':[('is_school', '=', False)]}">
+                        <field name="student_ids">
+                            <tree string="Student Tree">
+                                <field name="birth_date"/>
+                                <field name="name"/>
+                            </tree>
+                            <form string="student form">
+                                <sheet>
+                                    <field name="name"/>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+
             </field>
         </record>
+
+        <record id="view_sdent_tags_form" model="ir.ui.view">
+            <field name="name">view.student.tag.form</field>
+            <field name="model">student.tag</field>
+            <field name="arch" type="xml">
+                <form string="Student Tag Form">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Tag Name"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_student_tags_tree" model="ir.ui.view">
+            <field name="name">view.student.tag.tree</field>
+            <field name="model">student.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Student Tag List" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_student_tag_view" model="ir.actions.act_window">
+            <field name="name">Student Tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">student.tag</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Student Tags
+              </p><p>
+                Crate New Tags
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_configuration_categ" name="Configuration" parent="menu_student_root" sequence="100"/>
+        <menuitem id="menu_student_tag_view" name="Student Tags" parent="menu_configuration_categ" action="action_student_tag_view" sequence="1"/>
+
     </data>
 </odoo>
