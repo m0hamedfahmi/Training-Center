@@ -21,6 +21,8 @@ class Students(models.Model):
     # related_email = fields.Char(related="school_id.email")
     image_1920 = fields.Image(string="Image", )
     description = fields.Html(string="Description", )
+    priority = fields.Selection(string="Priority", selection=[('0', 'Low'), ('1', 'Medium'), ('2', 'High'),('3', 'Extra')], required=False, )
+    tag_ids = fields.Many2many(comodel_name="student.tag", relation="student_student_student_tag_rel", column1="student_id", column2="tag_id", string="Tags", )
 
     @api.depends('birth_date')
     def _compute_age(self):

@@ -24,12 +24,14 @@
                                     <field name="age" class="oe_inline"/> Years
                                 </div>
                                 <field name="email" widget="email"/>
+                                <field name="tag_ids" widget="many2many_tags"/>
                             </group>
                             <group>
                                 <field name="national_id"/>
                                 <field name="school_id" domain="[('is_school', '=', True)]" context="{'default_is_school': 1}"/>
                                 <field name="school_email" attrs="{'required': [('school_id', '!=', False), ('school_email', '=', False)]}"/>
                                 <field name="related_school_email" help="Related Email"/>
+                                <field name="priority" widget="priority"/>
                             </group>
                         </group>
                         <notebook>
